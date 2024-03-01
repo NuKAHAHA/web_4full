@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Football Hub</title>
+
+    <%- include('../components/head.ejs') %>
+
+    <!-- Подключаем стили карусели Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0-alpha1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<%- include('../components/navbar.ejs') %>
+
+<div class="container">
+    <h1>Football Teams List</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Team Name</th>
+            <th scope="col">League</th>
+            <th scope="col">Founded</th>
+            <th scope="col">Images</th>
+            <th scope="col">Actions</th> <!-- Добавляем столбец для действий -->
+        </tr>
+        </thead>
+        <tbody>
+
+        <% teams.forEach((team, index) => { %>
+            <tr>
+                <td><%= index + 1 %></td> <!-- Нумерация команд -->
+                <td><%= team.Team %></td>
+                <td><%= team.League %></td>
+                <td><%= team.Founded %></td>
+                <td>
+                    <!-- Маленькая карусель для изображений -->
+                    <div id="carousel<%= index %>" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="<%= team.FirstImage %>" class="d-block w-100" alt="First Image">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="<%= team.TwoImage %>" class="d-block w-100" alt="Second Image">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="<%= team.ThreeImage %>" class="d-block w-100" alt="Third Image">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carousel<%= index %>" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carousel<%= index %>" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </td>
+                <td>
+                    <!-- Кнопка для открытия модального окна с формой редактирования -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal<%= index %>">
+                        Edit
+                    </button>
+                    <div class="modal fade" id="deleteModal<%= index %>" tabindex="-1" aria-labelledby="deleteModalLabel<%= index %>" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteModalLabel<%= index %>">Delete Team</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Are you sure you want to delete this team?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <!-- Форма для отправки запроса на удаление команды -->
+                                    <form action="/delete/<%= team._id %>" method="post">
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Кнопка для открытия модального окна удаления -->
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<%= index %>">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+
+            <!-- Модальное окно для редактирования команды -->
+            <div class="modal fade" id="editModal<%= index %>" tabindex="-1" aria-labelledby="editModalLabel<%= index %>" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editModalLabel<%= index %>">Edit Team</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Форма для редактирования данных команды -->
+                            <form action="/edit/<%= team._id %>" method="post">
+                                <label for="Team">Team Name:</label>
+                                <input type="text" id="Team" name="Team" value="<%= team.Team %>"><br>
+
+                                <label for="League">League:</label>
+                                <input type="text" id="League" name="League" value="<%= team.League %>"><br>
+
+                                <label for="Founded">Founded:</label>
+                                <input type="text" id="Founded" name="Founded" value="<%= team.Founded %>"><br>
+
+                                <!-- Поля для изменения фотографий -->
+                                <label for="FirstImage">First Image:</label>
+                                <input type="text" id="FirstImage" name="FirstImage" value="<%= team.FirstImage %>"><br>
+                                <label for="TwoImage">Second Image:</label>
+                                <input type="text" id="TwoImage" name="TwoImage" value="<%= team.TwoImage %>"><br>
+                                <label for="ThreeImage">Third Image:</label>
+                                <input type="text" id="ThreeImage" name="ThreeImage" value="<%= team.ThreeImage %>"><br>
+
+                                <input type="submit" value="Save">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+
+        </tbody>
+    </table>
+    <% if (teams.length === 0) { %>
+        <p>No teams found.</p>
+    <% } %>
+    <% if (pagination.totalPages > 1) { %>
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <% if (pagination.currentPage > 1) { %>
+                    <li class="page-item"><a class="page-link" href="?page=<%= pagination.currentPage - 1 %>">Previous</a></li>
+                <% } %>
+                <% for (let i = 1; i <= pagination.totalPages; i++) { %>
+                    <li class="page-item <%= i === pagination.currentPage ? 'active' : '' %>"><a class="page-link" href="?page=<%= i %>"><%= i %></a></li>
+                <% } %>
+                <% if (pagination.currentPage < pagination.totalPages) { %>
+                    <li class="page-item"><a class="page-link" href="?page=<%= pagination.currentPage + 1 %>">Next</a></li>
+                <% } %>
+            </ul>
+        </nav>
+    <% } %>
+</div>
+
+<%- include('../components/footer.ejs') %>
+
+<% if (error) { %>
+    <script>
+        Swal.fire({
+            title: "An error occurred!",
+            text: "Failed to fetch teams.",
+            icon: "error"
+        });
+    </script>
+<% } %>

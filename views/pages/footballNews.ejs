@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Liga News</title>
+    <script>function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+        }
+    </script>
+    <style>
+      
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+    
+        input[type="text"],
+        input[type="number"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #253e88;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #101c3e;
+        }
+
+        h2 {
+            margin-top: 40px;
+            color: #333;
+        }
+
+        p {
+            margin-bottom: 10px;
+            color: #555;
+            text-align: center;
+        }
+    </style>
+    <%- include('../components/head.ejs') %>
+</head>
+<body>
+    
+    <%- include('../components/navbar.ejs') %>
+<h1>La Liga News</h1>
+<div class="container">
+    <div class="row">
+        <% if (Array.isArray(data)) { %>
+            <% data.forEach(function(article) { %>
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <% if(article.news_img) { %>
+                            <img src="<%= article.news_img %>" class="card-img-top" alt="News Image">
+                        <% } %>
+                        <div class="card-body">
+                            <h5 class="card-title"><%= article.title %></h5>
+                            <p class="card-text"><%= article.short_desc %></p>
+                            <a href="<%= article.url %>" target="_blank" class="btn btn-primary">Read more</a>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <p>No football news available.</p>
+        <% } %>
+    </div>
+</div>
+
+<!-- Включение общего футера -->
+<%- include('../components/footer.ejs') %>
+
+<!-- Показ сообщения об ошибке, если есть -->
+<% if (error) { %>
+    <script>
+        Swal.fire({
+            title: "An error occurred!",
+            text: "<%= error %>",
+            icon: "error"
+        });
+    </script>
+<% } %>
+</body>
+</html>

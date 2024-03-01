@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Weather App</title>
+
+    <%- include('../components/head.ejs') %>
+
+</head>
+<body class="bg-light">
+    <%- include('../components/navbar.ejs') %>
+
+    <div class="container">
+        <h1>Welcome to The Football Hub!</h1>
+        <p>This site is your ultimate destination for all things football. Stay up to date with the latest news, match results and analytics from the world of football. You will be one of the first to know everything about the Spanish</p>
+        <p>For the latest news, match results, and analytics from the world of football, including the Spanish league (La Liga), I recommend visiting reputable sports news websites such as ESPN FC, BBC Sport, Sky Sports, or the official La Liga website. These sources provide up-to-date information, match highlights, statistics, and analysis on all the action happening in the Spanish league.</p>
+    </div>
+
+    <%- include('../components/footer.ejs') %>
+
+    <% if (error) { %>
+        <script>
+            Swal.fire({
+                title: "An error occured!",
+                text: "City was not found.",
+                icon: "error"
+            });
+        </script>
+    <% } %>
+
+    
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Team</title>
+
+    <%- include('../components/head.ejs') %>
+
+
+</head>
+<body class="bg-light">
+<%- include('../components/navbar.ejs') %>
+
+<div class="container "  style="margin-top: -45px;">
+    <h1>Create New Team</h1>
+    <form action="/add" method="POST">
+        <div class="mb-3">
+            <label for="team" class="form-label">Team Name</label>
+            <input type="text" class="form-control" id="team" name="team">
+        </div>
+        <div class="mb-3">
+            <label for="league" class="form-label">League</label>
+            <input type="text" class="form-control" id="league" name="league">
+        </div>
+        <div class="mb-3">
+            <label for="founded" class="form-label">Founded</label>
+            <input type="number" class="form-control" id="founded" name="founded">
+        </div>
+        <div class="mb-3">
+            <label for="firstImage" class="form-label">First Image URL</label>
+            <input type="text" class="form-control" id="firstImage" name="firstImage">
+        </div>
+        <div class="mb-3">
+            <label for="twoImage" class="form-label">Second Image URL</label>
+            <input type="text" class="form-control" id="twoImage" name="twoImage">
+        </div>
+        <div class="mb-3">
+            <label for="threeImage" class="form-label">Third Image URL</label>
+            <input type="text" class="form-control" id="threeImage" name="threeImage">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<%- include('../components/footer.ejs') %>
+</body>
+</html>

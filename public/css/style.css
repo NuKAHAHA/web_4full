@@ -1,0 +1,74 @@
+
+
+/* Стили для иконок */
+.fa-sun-o {
+    font-size: 22px;
+    margin-right: 5px;
+}
+
+/* Медиа-запрос для мобильных устройств */
+@media screen and (max-width: 767px) {
+    .display-0 {
+        font-size: 2em;
+    }
+
+    .image {
+        max-width: 150px;
+    }
+
+    .fa-sun-o {
+        font-size: 18px;
+    }
+}
+
+/* Стили для компаса загрузки */
+.spinner {
+    width: 100px;
+    height: 100px;
+    border: 10px solid rgba(0, 0, 0, 0.1); /* Цвет компаса */
+    border-top: 10px solid #c5cfbe; /* Цвет активного сегмента компаса */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+body {
+    font-family: "Helvetica", Arial, sans-serif;
+    color: #fff; /* Change text color to white */
+    background-color: #222; /* Set background color to #222 */
+}
+
+body input[type="text"],
+body input[type="number"],
+body button {
+    background-color: #031a06; /* Change button background color to #5c0054 */
+    color: #fff; /* Change button text color to white */
+    border-color: #07380e;
+}
+
+body input[type="text"]::placeholder,
+body input[type="number"]::placeholder {
+    color: #000000;
+}
+
+
+
+body .card0,
+body .card2 {
+    background-color: #000000;
+    color: #ccc;
+}
+
+body .line {
+    background-color: #444;
+}
+
+body .light-text {
+    color: #999;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+ 

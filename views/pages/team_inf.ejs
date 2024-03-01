@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Info</title>
+    <style>
+      
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+    
+        input[type="text"],
+        input[type="number"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #253e88;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #101c3e;
+        }
+
+        h2 {
+            margin-top: 40px;
+            color: #333;
+        }
+
+        p {
+            margin-bottom: 10px;
+            color: #555;
+            text-align: center;
+        }
+    </style>
+    <%- include('../components/head.ejs') %>
+</head>
+<body>
+    
+    <%- include('../components/navbar.ejs') %>
+<h1>Team Information</h1>
+<!-- Форма для ввода названия команды -->
+<form action="/team-info" method="post">
+    <label for="teamName">Enter Team Name:</label>
+    <input type="text" id="teamName" name="teamName">
+    <button type="submit">Get Info</button>
+</form>
+
+<% if (teamInfo) { %>
+    <p>Team Name: <%= teamInfo.name %></p>
+<p>League: <%= teamInfo.league %></p>
+<p>Season: <%= teamInfo.season %></p>
+<p>Official Name: <%= teamInfo.officialName %></p>
+<p>Address: <%= teamInfo.address %></p>
+<p>Website: <%= teamInfo.website %></p>
+<p>Founded: <%= teamInfo.founded %></p>
+<p>Team Size: <%= teamInfo.teamSize %></p>
+<p>Average Age: <%= teamInfo.averageAge %></p>
+<p>Foreigners: <%= teamInfo.foreigners %></p>
+<p>Team Value: <%= teamInfo.teamValue %></p>
+<p>Venue: <%= teamInfo.venue %></p>
+<p>Venue Capacity: <%= teamInfo.venueCapacity %></p>
+
+<% } else { %>
+    <p>Team information not found</p>
+<% } %>
+
+
+<%- include('../components/footer.ejs') %>
+</body>
+</html>
